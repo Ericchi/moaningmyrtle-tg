@@ -38,7 +38,7 @@ timeinit = 300.00
 aiDream = MegaHAL.new
 aiDream.load(botPath + 'dreams.brn') if File.file?(botPath + 'dreams.brn')
 # Hour of the day when the bot will wake up:
-awakeHour = 3
+awakeHour = 8
 ### END OF ADVANCED CONFIG ###
 
 ai.load(botPath + 'brain.brn') if File.file?(botPath + 'brain.brn')
