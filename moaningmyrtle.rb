@@ -37,8 +37,6 @@ timeinit = 300.00
 # Dreams artificial intelligence (comment out if not needed):
 aiDream = MegaHAL.new
 aiDream.load(botPath + 'dreams.brn') if File.file?(botPath + 'dreams.brn')
-# Hour of the day when the bot will wake up:
-awakeHour = 8
 ### END OF ADVANCED CONFIG ###
 
 ai.load(botPath + 'brain.brn') if File.file?(botPath + 'brain.brn')
@@ -111,7 +109,7 @@ Telegram::Bot::Client.run($botToken) do |bot|
         # Goodmorning section
         lastdayfile = File.open($botPath + ".lastday")
         lastdayfile_data = lastdayfile.read
-        if currentDate != Date.parse(lastdayfile_data) && t1.hour >= awakeHour
+        if currentDate != Date.parse(lastdayfile_data) && t1.hour >= $awakeHour
           puts "Date check is valid."
           puts currentDate
           puts lastdayfile_data
