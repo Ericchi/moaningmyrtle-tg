@@ -9,6 +9,7 @@ require 'telegram/bot'
 require 'megahal'
 require_relative("config.rb")
 require 'date'
+require 'digest'
 
 botPath = File.dirname(__FILE__) + "/"
 ai = MegaHAL.new
@@ -168,8 +169,39 @@ Telegram::Bot::Client.run($botToken) do |bot|
           end
         end
 
-        next
+        if message.text =~ /\/oroscopo@#{$botName}/i
+            puts "Richiesta di oroscopo da: #{message.from.username.to_s} con ID #{message.from.id}"
+            bundleStars = (message.from.id.to_s + Date.today.to_s)
+            introStars = "Ciao " + message.from.username.to_s + "! Ora ti leggerò le stelle! Dammi solo un istante."
+            bot.api.send_message(chat_id: $tgGroupID, text: introStars)
+            shaStars = Digest::SHA256.hexdigest(bundleStars)
+            arrayStars = [shaStars[0..1].to_i(16), shaStars[2..3].to_i(16), shaStars[4..5].to_i(16)]
+            arrayExcellents = ["Oggi è una giornata davvero bella dal punto di vista affettivo! Chissà, magari potrà succedere qualcosa di magico!", "È un giorno veramente fortunato per te! Speriamo che possa succedere qualcosa di bello!", "Quella di oggi dovrebbe essere una giornata all'insegna del successo professionale. Che bello!"]
+            arrayGoods = ["Oggi è una bella giornata per i tuoi sentimenti. Nell'aria c'è qualcosa di buono, me lo sento!", "La fortuna ti dovrebbe arridere. Speriamo che sia davvero così!", "È una buona giornata dal punto di vista produttivo. Ti auguro buon lavoro!"]
+            arrayMehs = ["Oggi è una giornata sentimentalmente tranquilla.", "Dal punto di vista della fortuna, sembra essere una giornata nella media.", "Oggi è una buona giornata per impegnarsi, ma cerca di non strafare!"]
+            arrayBads = ["Oggi non è esattamente una bella giornata per avere dei contatti sociali. Meglio stare in casa.", "Oggi le stelle non sono ben allineate. La fortuna potrebbe non essere dalla tua parte.", "Oggi è una giornata complicata, ma ce la puoi fare!"]
+            arrayTerribles = ["Oggi è proprio una giornata all'insegna del malumore. Mi dispiace.","È meglio che non tenti la tua fortuna oggi, perché non è per niente dalla tua parte.", "Oggi è proprio una giornata difficile. Mi raccomando, fai delle pause se non te la senti di fare le cose."]
+            sleep(5)
+            for i in 0..2
+              case arrayStars[i]
+                when 0..15
+                  bot.api.send_message(chat_id: $tgGroupID, text: arrayTerribles[i])
+                when 16..63
+                  bot.api.send_message(chat_id: $tgGroupID, text: arrayBads[i])
+                when 64..127
+                  bot.api.send_message(chat_id: $tgGroupID, text: arrayMehs[i])
+                when 128..191
+                  bot.api.send_message(chat_id: $tgGroupID, text: arrayGoods[i])
+                when 192..255
+                  bot.api.send_message(chat_id: $tgGroupID, text: arrayExcellents[i])
+              else
+                bot.api.send_message(chat_id: $tgGroupID, text: "Si è verificato un errore. Non sono in grado di leggere le stelle.")
+              end
+            end
+          end
 
+        next
+        
         # Here you can code more functions
       end
     end
