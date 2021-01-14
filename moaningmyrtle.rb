@@ -107,28 +107,6 @@ Telegram::Bot::Client.run($botToken) do |bot|
         end
         # End of dream section
 
-        # Goodmorning section
-        lastdayfile = File.open($botPath + ".lastday")
-        lastdayfile_data = lastdayfile.read
-        if currentDate != Date.parse(lastdayfile_data) && t1.hour >= $awakeHour
-          puts "Date check is valid."
-          puts currentDate
-          puts lastdayfile_data
-          puts t1.hour
-          if File.exist?($botPath + '.lastday')
-            File.delete($botPath + '.lastday')
-            out_file = File.new($botPath + ".lastday", "w")
-            out_file.puts(Date.today)
-            out_file.close
-          end
-          currentDate = Date.today
-          bot.api.send_message(chat_id: $tgGroupID, text: $newDayMessage.sample)
-          reply = aiDream.reply("")
-          bot.api.send_message(chat_id: $tgGroupID, text: reply)
-          puts "Sending new day message -- #{message.chat.type} #{message.chat.id}"
-        end
-        # End of goodmorning section
-
         if message.text =~ /\/status@#{$botName}/i
           $deactivated = "Attivate"
           if File.exist?(File.dirname(__FILE__) + '/.deactivated')
@@ -199,6 +177,28 @@ Telegram::Bot::Client.run($botToken) do |bot|
               end
             end
           end
+
+        # Goodmorning section
+        lastdayfile = File.open($botPath + ".lastday")
+        lastdayfile_data = lastdayfile.read
+        if currentDate != Date.parse(lastdayfile_data) && t1.hour >= $awakeHour
+          puts "Date check is valid."
+          puts currentDate
+          puts lastdayfile_data
+          puts t1.hour
+          if File.exist?($botPath + '.lastday')
+            File.delete($botPath + '.lastday')
+            out_file = File.new($botPath + ".lastday", "w")
+            out_file.puts(Date.today)
+            out_file.close
+          end
+          currentDate = Date.today
+          bot.api.send_message(chat_id: $tgGroupID, text: $newDayMessage.sample)
+          reply = aiDream.reply("")
+          bot.api.send_message(chat_id: $tgGroupID, text: reply)
+          puts "Sending new day message -- #{message.chat.type} #{message.chat.id}"
+        end
+        # End of goodmorning section
 
         next
         
