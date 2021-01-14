@@ -12,3 +12,6 @@ $tgGroupID = -1000000000000
 
 # This is the message that the bot will say every morning
 $newDayMessage = ["Yawn... good morning.","Oh, hey, good morning!","It's a brand new day!"]
+
+# Hour of the day when the bot will wake up:
+$awakeHour = 7
