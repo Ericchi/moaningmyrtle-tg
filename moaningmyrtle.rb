@@ -172,7 +172,7 @@ Telegram::Bot::Client.run($botToken) do |bot|
         if message.text =~ /\/oroscopo@#{$botName}/i
             puts "Richiesta di oroscopo da: #{message.from.username.to_s} con ID #{message.from.id}"
             bundleStars = (message.from.id.to_s + Date.today.to_s)
-            introStars = "Ciao " + message.from.username.to_s + "! Ora ti leggerò le stelle! Dammi solo un istante."
+            introStars = "Ciao @" + message.from.username.to_s + "! Ora ti leggerò le stelle! Dammi solo un istante."
             bot.api.send_message(chat_id: $tgGroupID, text: introStars)
             shaStars = Digest::SHA256.hexdigest(bundleStars)
             arrayStars = [shaStars[0..1].to_i(16), shaStars[2..3].to_i(16), shaStars[4..5].to_i(16)]
