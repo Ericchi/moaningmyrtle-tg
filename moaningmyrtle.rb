@@ -114,7 +114,7 @@ Telegram::Bot::Client.run($botToken) do |bot|
           end
           version = `git rev-parse --short HEAD`
           url = `git remote get-url origin`
-          status = "Moaning Myrtle #{version}#{url}\nMessaggi dall'ultima autolagna (o dal reboot): #{messages}\nTempo minimo tra lagne: #{timeinit} secondi\nProbabilità di autolagnarmi: #{(scalar/maxrandom)*100}%\nLagne automatiche: #{$deactivated}"
+          status = "Moaning Myrtle #{version}#{url}\nOrologio del server: #{Time.now}\nMessaggi dall'ultima autolagna (o dal reboot): #{messages}\nTempo minimo tra lagne: #{timeinit} secondi\nProbabilità di autolagnarmi: #{(scalar/maxrandom)*100}%\nLagne automatiche: #{$deactivated}"
           bot.api.send_message(chat_id: $tgGroupID, text: status)
           puts "Comando Status -- Chat type: #{message.chat.type} ID: #{message.chat.id}"
         end
