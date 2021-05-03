@@ -68,7 +68,7 @@ Telegram::Bot::Client.run($botToken) do |bot|
       reply = nil
       text = message.text.dup rescue ''
       # Debug
-      puts "" + Time.now.to_s + "Incoming message from #{message.from.username.to_s}  - Chat type: #{message.chat.type}　- ID: #{message.chat.id}"
+      puts "" + Time.now.to_s + " Incoming message from #{message.from.username.to_s} - Chat type: #{message.chat.type} - ID: #{message.chat.id}"
       # End debug
       currentDate = Date.today
       #if message.chat.type == 'supergroup'
