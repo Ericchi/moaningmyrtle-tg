@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/sh
+
+MYRTLE_DIR=$(dirname "$0")
 
 while :
 do
-	ruby moaningmyrtle.rb
-	sleep 5
+        ruby $MYRTLE_DIR/moaningmyrtle.rb
+        sleep 5
 done
