@@ -1,2 +1,2 @@
 # moaningmyrtle-tg
-Migrated
+Migrated here: https://git.ericchi.moe/ericchi/moaningmyrtle-tg
